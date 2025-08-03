@@ -55,10 +55,10 @@ export default function Profile() {
 
   const settingsItems = [
     { icon: Settings, label: "Sleep Profile", href: "/onboarding" },
-    { icon: Bell, label: "Notifications", href: "#" },
-    { icon: Download, label: "Audio Downloads", href: "#" },
-    { icon: Shield, label: "Privacy & Security", href: "#" },
-    { icon: HelpCircle, label: "Help & Support", href: "#" },
+    // { icon: Bell, label: "Notifications", href: "#" },
+    // { icon: Download, label: "Audio Downloads", href: "#" },
+    { icon: Shield, label: "Privacy & Security", href: "/privacy" },
+    { icon: HelpCircle, label: "Help & Support", href: "/help" },
   ];
 
   return (
@@ -152,9 +152,7 @@ export default function Profile() {
               key={index}
               className="glass-card hover:bg-white/15 transition-colors duration-300 cursor-pointer active:scale-95 sm:active:scale-100"
               onClick={() => {
-                if (item.href === "/onboarding") {
-                  setLocation(item.href);
-                }
+                setLocation(item.href);
               }}
             >
               <div className="p-3 sm:p-4 flex items-center justify-between">

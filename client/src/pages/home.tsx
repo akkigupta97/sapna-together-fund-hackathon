@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import AppLayout from "@/components/layout/app-layout";
-import { Moon, Settings, Sparkles, Bed, Headphones, Play, Clock, Heart, Star, Volume2, MoreHorizontal } from "lucide-react";
+import { Moon, Settings, Sparkles, Bed, Headphones, Play, Clock, Heart, Star, Volume2, MoreHorizontal, Plus } from "lucide-react";
 import { useAudio } from "@/lib/audio-context";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -126,7 +126,7 @@ export default function Home(): JSX.Element {
           onClick={() => setLocation('/sound-generator')}
           className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-r from-violet-600/90 to-purple-600/90 hover:from-violet-700/90 hover:to-purple-700/90 rounded-full shadow-2xl hover:scale-110 transition-all duration-300 flex items-center justify-center backdrop-blur-sm border border-white/10"
         >
-          <Volume2 className="w-6 h-6 md:w-7 md:h-7 text-white group-hover:scale-110 transition-transform duration-300" />
+          <Plus className="w-8 h-8 md:w-10 md:h-10 text-white group-hover:scale-110 transition-transform duration-300" />
         </Button>
         <div className="absolute -top-12 right-0 bg-slate-900/95 text-white text-xs md:text-sm px-3 py-1.5 rounded-lg backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap border border-white/10">
           Sound Generator
@@ -136,13 +136,11 @@ export default function Home(): JSX.Element {
       {/* Mobile Header - Improved spacing and typography */}
       <div className="md:hidden flex items-center justify-between p-4 bg-slate-900/50 backdrop-blur-sm border-b border-white/5">
         <div className="flex items-center space-x-3">
-          <div className="w-11 h-11 bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
-            <Moon className="w-5 h-5 text-white" />
-          </div>
+          <img src="https://sapna-assets.s3.us-east-1.amazonaws.com/sapna.png" className="text-white h-8 w-8 text-sm rounded-md" />
           <div>
             <h1 className="text-lg font-semibold text-white">Sapna</h1>
             <p className="text-xs text-slate-300">
-              {greeting()}, {sleepProfile?.name || "there"}
+              {greeting()}, {sleepProfile?.name || "Abinash"}
             </p>
           </div>
         </div>
@@ -159,7 +157,7 @@ export default function Home(): JSX.Element {
           <div className="flex items-center justify-between mb-2">
             <div>
               <h1 className="text-3xl lg:text-4xl font-bold text-white mb-1">
-                {greeting()}, {sleepProfile?.name || "there"}
+                {greeting()}, {sleepProfile?.name || "Abinash"}
               </h1>
               <p className="text-slate-300 text-lg">Ready for another peaceful night's rest?</p>
             </div>
@@ -324,7 +322,7 @@ export default function Home(): JSX.Element {
         )}
 
         {/* Quick Access Grid - Enhanced mobile layout */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+        {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           <Button 
             variant="outline" 
             className="bg-slate-900/40 border-white/10 hover:bg-slate-900/50 h-16 md:h-20 flex-col space-y-1 md:space-y-2 rounded-xl lg:rounded-2xl backdrop-blur-sm transition-colors duration-300"
@@ -357,7 +355,7 @@ export default function Home(): JSX.Element {
             <span className="text-xl md:text-2xl">🧬</span>
             <span className="text-xs md:text-sm font-medium text-white">Sleep Type</span>
           </Button>
-        </div>
+        </div> */}
       </div>
     </AppLayout>
   );

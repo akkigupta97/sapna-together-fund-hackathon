@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
-import { Home, TrendingUp, MessageCircle, User, Settings, Moon } from "lucide-react";
+import { Home, Headphones, MessageCircle, User, Settings, Moon } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const navigationItems = [
   { path: "/", icon: Home, label: "Home" },
-  { path: "/sleep-track", icon: TrendingUp, label: "Track" },
+  { path: "/podcast-meditation", icon: Headphones, label: "Voices" },
   { path: "/chat", icon: MessageCircle, label: "Chat" },
   { path: "/profile", icon: User, label: "Profile" },
 ];
@@ -33,7 +33,7 @@ export default function TopNavigation() {
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 gradient-purple rounded-full flex items-center justify-center">
-              <Moon className="text-white text-sm" />
+              <img src="https://sapna-assets.s3.us-east-1.amazonaws.com/sapna.png" className="text-white h-8 w-8 text-sm rounded-md" />
             </div>
             <h1 className="text-lg font-semibold text-white">Sapna</h1>
           </div>
@@ -58,9 +58,9 @@ export default function TopNavigation() {
           </div>
 
           {/* Settings */}
-          <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/10">
+          {/* <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/10">
             <Settings className="text-white w-5 h-5" />
-          </Button>
+          </Button> */}
         </div>
       </div>
     </nav>

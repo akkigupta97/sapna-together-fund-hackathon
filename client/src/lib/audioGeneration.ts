@@ -21,7 +21,7 @@ interface SoundPreferences {
 export class FrontendAudioService {
   private gradioEndpoint: string;
 
-  constructor(gradioEndpoint: string = "https://3fb5dcfb3287cab579.gradio.live") {
+  constructor(gradioEndpoint: string = "https://04498bebb8fed7557c.gradio.live") {
     this.gradioEndpoint = gradioEndpoint;
   }
 

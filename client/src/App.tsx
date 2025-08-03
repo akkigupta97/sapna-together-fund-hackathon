@@ -14,7 +14,10 @@ import AudioExperience from "@/pages/audio-experience";
 import VideoExperience from "@/pages/video-experience";
 import UnifiedOnboarding from "@/pages/unified-onboarding";
 import NotFound from "@/pages/not-found";
-import SoundGeneratorPage from "./pages/sound-generator";
+import SoundGeneratorPage from "@/pages/sound-generator";
+import PodcastMeditationPage from "@/pages/podcast-meditation";
+import PrivacyPage from "@/pages/privacy";
+import HelpPage from "@/pages/help";
 
 function Router() {
   return (
@@ -24,10 +27,13 @@ function Router() {
       <Route path="/sleep-track" component={SleepTrack} />
       <Route path="/chat" component={Chat} />
       <Route path="/profile" component={Profile} />
+      <Route path="/privacy" component={PrivacyPage} />
+      <Route path="/help" component={HelpPage} />
       <Route path="/onboarding" component={UnifiedOnboarding} />
       <Route path="/daily-checkin" component={DailyCheckIn} />
       <Route path="/audio-experience" component={AudioExperience} />
       <Route path="/video-experience" component={VideoExperience} />
+      <Route path="/podcast-meditation" component={PodcastMeditationPage} />
       <Route component={NotFound} />
     </Switch>
   );

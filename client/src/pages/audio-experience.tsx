@@ -65,7 +65,7 @@ export default function AudioExperience() {
   const userId = localStorage.getItem("currentUserId") || "demo-user-123";
 
   // Initialize Gradio audio service
-  const audioService = new FrontendAudioService("https://3fb5dcfb3287cab579.gradio.live");
+  const audioService = new FrontendAudioService("https://04498bebb8fed7557c.gradio.live");
 
   // Mutation for processing generated audio on backend
   const processAudioMutation = useMutation({

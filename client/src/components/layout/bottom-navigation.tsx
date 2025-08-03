@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
-import { Home, TrendingUp, MessageCircle, User } from "lucide-react";
+import { Home, TrendingUp, MessageCircle, User, Headphones } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const navigationItems = [
   { path: "/", icon: Home, label: "Home" },
-  { path: "/sleep-track", icon: TrendingUp, label: "Track" },
+  { path: "/podcast-meditation", icon: Headphones, label: "Voices" },
   { path: "/chat", icon: MessageCircle, label: "Chat" },
   { path: "/profile", icon: User, label: "Profile" },
 ];

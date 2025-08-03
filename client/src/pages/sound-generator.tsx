@@ -71,7 +71,7 @@ const SoundGeneratorPage: React.FC = () => {
       progressCallback(50, "Generating audio with Gradio...");
       
       // Call Gradio API directly with the prompt
-      const response = await fetch("https://3fb5dcfb3287cab579.gradio.live/api/predict", {
+      const response = await fetch("https://04498bebb8fed7557c.gradio.live/api/predict", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ const SoundGeneratorPage: React.FC = () => {
         if (typeof audioPath === 'string') {
           audioUrl = audioPath.startsWith('http') 
             ? audioPath 
-            : `https://3fb5dcfb3287cab579.gradio.live/file=${audioPath}`;
+            : `https://04498bebb8fed7557c.gradio.live/file=${audioPath}`;
         }
       }
 
