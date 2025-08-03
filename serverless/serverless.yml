@@ -1,0 +1,228 @@
+service: sleep-tracker-api
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ${opt:region, 'us-east-1'}
+  stage: ${opt:stage, 'dev'}
+  environment:
+    DYNAMODB_TABLE_NAME: ${self:service}-${self:provider.stage}
+    OPENAI_API_KEY: ${env.OPENAI_API_KEY}
+    ELEVENLABS_API_KEY: ${env.ELEVENLABS_API_KEY}
+    GROQ_API_KEY: ${env.GROQ_API_KEY}
+    # AWS_REGION removed - Lambda provides this automatically
+  
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: 
+            - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE_NAME}"
+            - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE_NAME}/index/*"
+        - Effect: Allow
+          Action:
+            - s3:GetObject
+            - s3:PutObject
+            - s3:DeleteObject
+          Resource: "arn:aws:s3:::${self:service}-${self:provider.stage}-audio-files/*"
+
+functions:
+  api:
+    handler: dist/handler.handler
+    timeout: 30
+    memorySize: 1024
+    events:
+      # Users
+      - http:
+          path: /api/users
+          method: post
+          cors: true
+      - http:
+          path: /api/users/{id}
+          method: get
+          cors: true
+      - http:
+          path: /api/users/{id}
+          method: patch
+          cors: true
+      
+      # Sleep Profiles
+      - http:
+          path: /api/sleep-profile/{userId}
+          method: get
+          cors: true
+      - http:
+          path: /api/sleep-profile
+          method: post
+          cors: true
+      - http:
+          path: /api/sleep-profile/{userId}
+          method: patch
+          cors: true
+      
+      # Sleep Sessions
+      - http:
+          path: /api/sleep-sessions/users/{userId}
+          method: get
+          cors: true
+      - http:
+          path: /api/sleep-sessions
+          method: post
+          cors: true
+      - http:
+          path: /api/sleep-sessions/{id}
+          method: patch
+          cors: true
+      - http:
+          path: /api/sleep-sessions/users/{userId}/latest
+          method: get
+          cors: true
+      
+      # Generated Audios
+      - http:
+          path: /api/audios/users/{userId}
+          method: get
+          cors: true
+      - http:
+          path: /api/audios/generate
+          method: post
+          cors: true
+      - http:
+          path: /api/audios/{id}
+          method: patch
+          cors: true
+      - http:
+          path: /api/audios/users/{userId}/favorites
+          method: get
+          cors: true
+      - http:
+          path: /api/audios/personalized
+          method: post
+          cors: true
+      - http:
+          path: /api/audios/config
+          method: get
+          cors: true
+      
+      # Chat
+      - http:
+          path: /api/chat/{userId}
+          method: get
+          cors: true
+      - http:
+          path: /api/chat
+          method: post
+          cors: true
+      
+      # Sleep Insights
+      - http:
+          path: /api/sleep-insights/{userId}
+          method: get
+          cors: true
+
+resources:
+  Resources:
+    SleepTrackerTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.DYNAMODB_TABLE_NAME}
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: PK
+            AttributeType: S
+          - AttributeName: SK
+            AttributeType: S
+        KeySchema:
+          - AttributeName: PK
+            KeyType: HASH
+          - AttributeName: SK
+            KeyType: RANGE
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        SSESpecification:
+          SSEEnabled: true
+        Tags:
+          - Key: Environment
+            Value: ${self:provider.stage}
+          - Key: Service
+            Value: ${self:service}
+
+    AudioFilesBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:service}-${self:provider.stage}-audio-files
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+        VersioningConfiguration:
+          Status: Enabled
+        LifecycleConfiguration:
+          Rules:
+            - Id: DeleteOldAudioFiles
+              Status: Enabled
+              ExpirationInDays: 90 # Delete audio files after 90 days
+        Tags:
+          - Key: Environment
+            Value: ${self:provider.stage}
+          - Key: Service
+            Value: ${self:service}
+
+
+
+  Outputs:
+    ApiGatewayRestApiId:
+      Value: !Ref ApiGatewayRestApi
+      Export:
+        Name: ${self:service}-${self:provider.stage}-api-id
+    
+    ApiGatewayRestApiRootResourceId:
+      Value: !GetAtt ApiGatewayRestApi.RootResourceId
+      Export:
+        Name: ${self:service}-${self:provider.stage}-root-resource-id
+    
+    DynamoDBTableName:
+      Value: !Ref SleepTrackerTable
+      Export:
+        Name: ${self:service}-${self:provider.stage}-table-name
+    
+    S3BucketName:
+      Value: !Ref AudioFilesBucket
+      Export:
+        Name: ${self:service}-${self:provider.stage}-bucket-name
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline
+
+custom:
+  esbuild:
+    bundle: true
+    minify: true
+    target: node18
+    exclude:
+      - aws-sdk
+    sourcemap: false
+    platform: node
+    concurrency: 10
+  
+  serverless-offline:
+    httpPort: 3000
+    lambdaPort: 3002
+    websocketPort: 3001

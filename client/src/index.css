@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile safe area support */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Active state for mobile touch */
+.active\:scale-98:active {
+  transform: scale(0.98);
+}
+
 :root {
   --background: hsl(0, 0%, 100%);
   --foreground: hsl(222, 84%, 4.9%);

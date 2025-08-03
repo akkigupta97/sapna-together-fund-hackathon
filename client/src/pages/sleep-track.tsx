@@ -41,94 +41,98 @@ export default function SleepTrack() {
 
   return (
     <AppLayout>
-      {/* Header */}
-      <div className="p-4 md:p-6">
-        <h1 className="text-2xl font-bold text-white">Sleep Tracking</h1>
-        <p className="text-gray-300">Monitor your sleep patterns and quality</p>
+      {/* Header - Optimized padding for mobile */}
+      <div className="p-3 sm:p-4 md:p-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-white">Sleep Tracking</h1>
+        <p className="text-sm sm:text-base text-gray-300">Monitor your sleep patterns and quality</p>
       </div>
 
-      {/* Main Content */}
-      <div className="px-4 md:px-6 space-y-6">
-        {/* Sleep Overview */}
-        <Card className="glass-card p-6 mb-6">
-          <h2 className="text-lg font-semibold mb-4">Sleep Overview</h2>
-          <div className="text-center mb-6">
-            <div className="text-4xl font-bold text-mint-green mb-2">
+      {/* Main Content - Improved mobile spacing */}
+      <div className="px-3 sm:px-4 md:px-6 space-y-4 sm:space-y-6 pb-20 sm:pb-6">
+        {/* Sleep Overview - Better mobile layout */}
+        <Card className="glass-card p-4 sm:p-6">
+          <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Sleep Overview</h2>
+          <div className="text-center mb-4 sm:mb-6">
+            <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-mint-green mb-2">
               {latestSession?.duration ? formatDuration(latestSession.duration) : "No data"}
             </div>
-            <div className="text-gray-300">Last night's sleep</div>
+            <div className="text-sm sm:text-base text-gray-300">Last night's sleep</div>
           </div>
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div>
-              <div className="text-xl font-semibold text-soft-indigo">
+          {/* Mobile-first grid - stacks on very small screens, 3 columns on larger */}
+          <div className="grid grid-cols-1 xs:grid-cols-3 gap-3 sm:gap-4 text-center">
+            <div className="py-2">
+              <div className="text-lg sm:text-xl font-semibold text-soft-indigo">
                 {latestSession?.deepSleep ? formatDuration(latestSession.deepSleep) : "--"}
               </div>
-              <div className="text-xs text-gray-300">Deep Sleep</div>
+              <div className="text-xs sm:text-sm text-gray-300">Deep Sleep</div>
             </div>
-            <div>
-              <div className="text-xl font-semibold text-soft-purple">
+            <div className="py-2">
+              <div className="text-lg sm:text-xl font-semibold text-soft-purple">
                 {latestSession?.lightSleep ? formatDuration(latestSession.lightSleep) : "--"}
               </div>
-              <div className="text-xs text-gray-300">Light Sleep</div>
+              <div className="text-xs sm:text-sm text-gray-300">Light Sleep</div>
             </div>
-            <div>
-              <div className="text-xl font-semibold text-warm-amber">
+            <div className="py-2">
+              <div className="text-lg sm:text-xl font-semibold text-warm-amber">
                 {latestSession?.remSleep ? formatDuration(latestSession.remSleep) : "--"}
               </div>
-              <div className="text-xs text-gray-300">REM Sleep</div>
+              <div className="text-xs sm:text-sm text-gray-300">REM Sleep</div>
             </div>
           </div>
         </Card>
 
-        {/* Weekly Stats */}
-        <Card className="glass-card p-6 mb-6">
-          <h3 className="text-lg font-semibold mb-4">Weekly Stats</h3>
-          <div className="grid grid-cols-2 gap-6 text-center">
-            <div>
-              <div className="text-2xl font-bold text-soft-indigo mb-1">
+        {/* Weekly Stats - Responsive layout */}
+        <Card className="glass-card p-4 sm:p-6">
+          <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Weekly Stats</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 text-center">
+            <div className="p-3 sm:p-0">
+              <div className="text-xl sm:text-2xl font-bold text-soft-indigo mb-1">
                 {formatDuration(avgDuration)}
               </div>
-              <div className="text-sm text-gray-300">Average Duration</div>
+              <div className="text-xs sm:text-sm text-gray-300">Average Duration</div>
             </div>
-            <div>
-              <div className="text-2xl font-bold text-mint-green mb-1">
+            <div className="p-3 sm:p-0">
+              <div className="text-xl sm:text-2xl font-bold text-mint-green mb-1">
                 {avgQuality}%
               </div>
-              <div className="text-sm text-gray-300">Average Quality</div>
+              <div className="text-xs sm:text-sm text-gray-300">Average Quality</div>
             </div>
           </div>
         </Card>
 
-        {/* Sleep Chart */}
-        <Card className="glass-card p-6 mb-6">
-          <h3 className="text-lg font-semibold mb-4">Weekly Trends</h3>
-          <SleepChart sessions={sessions.slice(0, 7)} />
+        {/* Sleep Chart - Responsive container */}
+        <Card className="glass-card p-3 sm:p-6">
+          <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Weekly Trends</h3>
+          <div className="overflow-x-auto">
+            <SleepChart sessions={sessions.slice(0, 7)} />
+          </div>
         </Card>
 
-        {/* Sleep History */}
+        {/* Sleep History - Mobile optimized */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">Recent Sessions</h3>
+          <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Recent Sessions</h3>
           {sessions.length === 0 ? (
-            <Card className="glass-card p-6 text-center">
+            <Card className="glass-card p-4 sm:p-6 text-center">
               <div className="text-gray-400">
-                <div className="text-3xl mb-2">😴</div>
-                <div>No sleep sessions yet</div>
-                <div className="text-sm mt-1">Start tracking your sleep to see insights here</div>
+                <div className="text-2xl sm:text-3xl mb-2">😴</div>
+                <div className="text-sm sm:text-base">No sleep sessions yet</div>
+                <div className="text-xs sm:text-sm mt-1">Start tracking your sleep to see insights here</div>
               </div>
             </Card>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-2 sm:space-y-3">
               {sessions.slice(0, 10).map((session) => (
-                <Card key={session.id} className="glass-card p-4">
-                  <div className="flex justify-between items-center mb-2">
-                    <div className="font-medium">
+                <Card key={session.id} className="glass-card p-3 sm:p-4">
+                  {/* Mobile-first responsive layout */}
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2 space-y-1 sm:space-y-0">
+                    <div className="font-medium text-sm sm:text-base">
                       {session.startTime ? formatDate(session.startTime) : "Unknown date"}
                     </div>
-                    <div className="text-mint-green font-semibold">
+                    <div className="text-mint-green font-semibold text-sm sm:text-base">
                       {session.duration ? formatDuration(session.duration) : "--"}
                     </div>
                   </div>
-                  <div className="flex justify-between text-sm text-gray-300">
+                  <div className="flex flex-col sm:flex-row sm:justify-between text-xs sm:text-sm text-gray-300 space-y-1 sm:space-y-0">
                     <span>
                       {session.startTime && session.endTime
                         ? `${formatTime(session.startTime)} - ${formatTime(session.endTime)}`

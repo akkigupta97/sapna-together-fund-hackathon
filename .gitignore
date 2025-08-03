@@ -4,3 +4,6 @@ dist
 server/public
 vite.config.ts.*
 *.tar.gz
+serverless/.serverless
+package-lock.json
+.local

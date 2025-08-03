@@ -12,11 +12,11 @@ export async function apiRequest(
   url: string,
   data?: unknown | undefined,
 ): Promise<Response> {
-  const res = await fetch(url, {
+  const res = await fetch(`https://fr4kgvezj6.execute-api.us-east-1.amazonaws.com/dev${url}`, {
     method,
     headers: data ? { "Content-Type": "application/json" } : {},
     body: data ? JSON.stringify(data) : undefined,
-    credentials: "include",
+    // credentials: "include",
   });
 
   await throwIfResNotOk(res);
@@ -30,7 +30,7 @@ export const getQueryFn: <T>(options: {
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
     const res = await fetch(queryKey.join("/") as string, {
-      credentials: "include",
+      // credentials: "include",
     });
 
     if (unauthorizedBehavior === "returnNull" && res.status === 401) {

@@ -35,7 +35,7 @@ export default function TopNavigation() {
             <div className="w-8 h-8 gradient-purple rounded-full flex items-center justify-center">
               <Moon className="text-white text-sm" />
             </div>
-            <h1 className="text-lg font-semibold text-white">DreamSound</h1>
+            <h1 className="text-lg font-semibold text-white">Sapna</h1>
           </div>
 
           {/* Navigation Links */}
