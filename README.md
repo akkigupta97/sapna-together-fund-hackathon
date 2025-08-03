@@ -12,9 +12,11 @@
   <strong>Transform your sleep with AI-generated personalized soundscapes and intelligent sleep coaching</strong>
 </p>
 
-<a href="/shared/vid.mp4">
-  <img src="/shared/final.png" width="25%">
-</a>
+<div align="center">
+  <a href="/shared/vid.mp4">
+    <img src="/shared/final.png" width="25%">
+  </a>
+</div>
 
 <p align="center">
   Sapna is a sophisticated sleep wellness application that combines cutting-edge AI technology with sleep science to create personalized audio experiences that help you fall asleep faster, sleep deeper, and wake up refreshed.
